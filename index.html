@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ทำอาหารให้แฟนกิน - Modern Food Blog & Home Cooking Recipes</title>
+    
+    <!-- Google Fonts: Prompt & Kanit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fffaf5',
+                            100: '#fef3e6',
+                            200: '#fce4cc',
+                            300: '#f9cb99',
+                            400: '#f4a961',
+                            500: '#ee832d',
+                            600: '#df6621',
+                            700: '#b94b1c',
+                            800: '#943c1e',
+                            900: '#77331c',
+                        },
+                        cream: {
+                            50: '#FEFCF8',
+                            100: '#FAF6ED',
+                            200: '#F5EFE0',
+                            300: '#EFE5CC',
+                        },
+                        wood: {
+                            500: '#8C5A3C',
+                            600: '#73462C',
+                            700: '#5A341F',
+                        }
+                    },
+                    fontFamily: {
+                        prompt: ['Prompt', 'sans-serif'],
+                        kanit: ['Kanit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #FAF6ED;
+            color: #4A3E3D;
+        }
+        .font-kanit {
+            font-family: 'Kanit', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 30px -5px rgba(185, 75, 28, 0.06);
+        }
+        .soft-shadow {
+            box-shadow: 0 12px 35px -8px rgba(120, 53, 15, 0.08);
+        }
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .hover-lift:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px -10px rgba(185, 75, 28, 0.15);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col justify-between selection:bg-brand-200 selection:text-brand-900">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-40 bg-cream-50/90 backdrop-blur-md border-b border-amber-900/5 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-utensils text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl sm:text-2xl font-bold font-kanit text-amber-950 tracking-tight block leading-none">ทำอาหารให้แฟนกิน</span>
+                        <span class="text-xs text-brand-600 font-medium">Home Cooking with Love</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+                    <a href="#home" class="px-4 py-2 rounded-full text-sm font-medium text-amber-950 hover:text-brand-600 hover:bg-brand-50 transition">หน้าแรก</a>
+                    <a href="#featured" class="px-4 py-2 rounded-full text-sm font-medium text-amber-900/80 hover:text-brand-600 hover:bg-brand-50 transition">เมนูทั้งหมด</a>
+                    <a href="#lover-favorite" class="px-4 py-2 rounded-full text-sm font-medium text-amber-900/80 hover:text-brand-600 hover:bg-brand-50 transition">เมนูที่แฟนชอบ</a>
+                    <a href="#budget-menu" class="px-4 py-2 rounded-full text-sm font-medium text-amber-900/80 hover:text-brand-600 hover:bg-brand-50 transition">เมนูประหยัด</a>
+                    <a href="#about" class="px-4 py-2 rounded-full text-sm font-medium text-amber-900/80 hover:text-brand-600 hover:bg-brand-50 transition">เกี่ยวกับเรา</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden sm:flex items-center gap-3">
+                    <button onclick="openRandomModal()" class="px-5 py-2.5 rounded-full bg-brand-500 hover:bg-brand-600 text-white text-sm font-medium shadow-lg shadow-brand-500/25 transition flex items-center gap-2 hover:scale-105">
+                        <i class="fa-solid fa-dice text-amber-100"></i>
+                        <span>วันนี้กินอะไรดี</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-xl text-amber-900 hover:bg-amber-100/50 transition">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cream-50 border-b border-amber-900/10 px-4 pt-2 pb-6 space-y-2">
+            <a href="#home" class="block px-4 py-2.5 rounded-xl text-base font-medium text-amber-950 hover:bg-brand-50">หน้าแรก</a>
+            <a href="#featured" class="block px-4 py-2.5 rounded-xl text-base font-medium text-amber-900/80 hover:bg-brand-50">เมนูทั้งหมด</a>
+            <a href="#lover-favorite" class="block px-4 py-2.5 rounded-xl text-base font-medium text-amber-900/80 hover:bg-brand-50">เมนูที่แฟนชอบ</a>
+            <a href="#budget-menu" class="block px-4 py-2.5 rounded-xl text-base font-medium text-amber-900/80 hover:bg-brand-50">เมนูประหยัด</a>
+            <a href="#about" class="block px-4 py-2.5 rounded-xl text-base font-medium text-amber-900/80 hover:bg-brand-50">เกี่ยวกับเรา</a>
+            <div class="pt-2">
+                <button onclick="openRandomModal()" class="w-full py-3 rounded-xl bg-brand-500 text-white font-medium text-center flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-dice"></i> วันนี้กินอะไรดี
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="home" class="flex-grow">
+        
+        <!-- Hero Section -->
+        <section class="relative py-12 lg:py-20 overflow-hidden">
+            <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-r from-brand-200/40 via-amber-200/30 to-orange-100/40 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                    
+                    <!-- Left Hero Content -->
+                    <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100/80 border border-amber-200 text-amber-800 text-sm font-medium">
+                            <span class="flex h-2 w-2 rounded-full bg-brand-500 animate-ping"></span>
+                            <span>สูตรอาหารทำง่าย อบอุ่นสไตล์ Home Cooking</span>
+                        </div>
+                        
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold font-kanit text-amber-950 leading-tight">
+                            ทำอาหารให้แฟนกิน
+                        </h1>
+                        
+                        <p class="text-lg sm:text-xl text-amber-900/70 font-light max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                            "เพราะความอร่อย คือการบอกรักผ่านอาหารที่ทำด้วยใจ"
+                        </p>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                            <a href="#featured" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-xl shadow-brand-600/20 hover:scale-105 transition flex items-center justify-center gap-3">
+                                <span>ดูเมนูทั้งหมด</span>
+                                <i class="fa-solid fa-arrow-right text-sm"></i>
+                            </a>
+                            <button onclick="openRandomModal()" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white hover:bg-amber-50 text-amber-900 border border-amber-200 font-semibold shadow-md hover:scale-105 transition flex items-center justify-center gap-3">
+                                <i class="fa-solid fa-wand-magic-sparkles text-brand-500"></i>
+                                <span>วันนี้กินอะไรดี</span>
+                            </button>
+                        </div>
+
+                        <!-- Stats Badge -->
+                        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-amber-900/10 max-w-md mx-auto lg:mx-0 text-center">
+                            <div>
+                                <span class="block text-2xl font-bold font-kanit text-brand-700">100+</span>
+                                <span class="text-xs text-amber-900/60">เมนูมัดใจแฟน</span>
+                            </div>
+                            <div>
+                                <span class="block text-2xl font-bold font-kanit text-brand-700">15 นาที</span>
+                                <span class="text-xs text-amber-900/60">ทำไว สบายใจ</span>
+                            </div>
+                            <div>
+                                <span class="block text-2xl font-bold font-kanit text-brand-700">5.0 ★</span>
+                                <span class="text-xs text-amber-900/60">แฟนชมทุกมื้อ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Chef Image (Unchanged 391.jpg) -->
+                    <div class="lg:col-span-6 relative">
+                        <div class="relative mx-auto max-w-md lg:max-w-none">
+                            <div class="absolute -inset-2 bg-gradient-to-tr from-brand-300 to-amber-200 rounded-3xl blur-xl opacity-60"></div>
+                            
+                            <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-amber-900/5 border border-white/60 group">
+                                <img src="391.jpg" 
+                                     alt="ผู้หญิงกำลังทำอาหารในครัว" 
+                                     onerror="this.onerror=null; this.src='https://scontent.fbkk29-8.fna.fbcdn.net/v/t39.30808-6/751563188_122103988425400755_8569961282794831474_n.jpg?stp=dst-jpg_tt6&cstp=mx1024x559&ctp=s960x960&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGQ8OvJcK8FMccik_MGXI-Nf4lqqI09C_l_iWqojT0L-XfgqPja-wCk3zf6RRqgAq_9klT0ffPcUWKVTq4FM5A6&_nc_ohc=GtyBsZ1Lh4gQ7kNvwHLpJ7W&_nc_oc=AdpRCpTiWaUBdFXEvftnRtdfT0QgPovispjvxN8wcYtvr2316OZcP3mz1niUyb4PvlA&_nc_zt=23&_nc_ht=scontent.fbkk29-8.fna&_nc_gid=CqJhPDvvY1AhTQ8bm0YFzg&_nc_ss=7b2a8&oh=00_AQFRvnWRlYcQNZfguzHBLEqL2cZXJj9Ws_0LzDxAlretaA&oe=6A7B361D';" 
+                                     class="w-full h-[380px] sm:h-[460px] object-cover object-center group-hover:scale-102 transition duration-700">
+                                
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                                
+                                <div class="absolute bottom-6 left-6 right-6 p-4 rounded-2xl glass-card border border-white/40 shadow-xl flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center text-lg">
+                                            <i class="fa-solid fa-heart"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-amber-900/70 font-medium">เมนูประจำวัน</p>
+                                            <p class="text-sm font-bold font-kanit text-amber-950">ข้าวต้มหมูสับทรงเครื่องอุ่นๆ</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs font-bold px-3 py-1 bg-brand-100 text-brand-700 rounded-full">พร้อมเสิร์ฟ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: เมนูแนะนำ (Top List - 4 Cards) -->
+        <section id="featured" class="py-16 bg-cream-100 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-brand-600 font-semibold text-sm tracking-wider uppercase mb-1 block">Top List</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-kanit text-amber-950">เมนูแนะนำ</h2>
+                    <p class="text-amber-900/70 mt-2">เมนูยอดฮิตทำง่าย กลิ่นหอมฟุ้งทั่วบ้าน รสชาติกลมกล่อมลงตัว</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                    
+                    <!-- Card 1: กะเพรากุ้งไข่ดาว -->
+                    <div class="bg-white rounded-3xl p-4 soft-shadow hover-lift flex flex-col justify-between border border-amber-900/5">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden h-48 mb-4">
+                                <img src="https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?q=80&w=800&auto=format&fit=crop" 
+                                     alt="กะเพรากุ้งไข่ดาว" 
+                                     class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-amber-900 shadow-sm flex items-center gap-1">
+                                    <i class="fa-solid fa-star text-amber-400"></i>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-bold font-kanit text-amber-950 mb-1">กะเพรากุ้งไข่ดาว</h3>
+                            <p class="text-xs text-amber-900/70 mb-4">เผ็ดกำลังดี ทำง่ายใน 15 นาที กุ้งสดตัวโตผัดใบกะเพราหอมกรุ่น</p>
+                        </div>
+                        <button onclick="openRecipeModal('กะเพรากุ้งไข่ดาว', '4.9', '15 นาที', 'https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?q=80&w=800&auto=format&fit=crop', 'กุ้งสด 200g, ใบกะเพรา 1 กำ, พริกขี้หนูสด 5 เม็ด, กระเทียม 4 กลีบ, ไข่ไก่ 1 ฟอง', '1. โขลกพริกกระเทียมผัดจนหอม<br>2. ใส่กุ้งผัดพอสุก ปรุงรสด้วยซอสหอยนางรม น้ำปลา น้ำตาล<br>3. ใส่ใบกะเพราผัดเร็วก่อนตักราดข้าวคู่ไข่ดาวกรอบ')" 
+                                class="w-full py-2.5 rounded-xl bg-brand-50 hover:bg-brand-500 hover:text-white text-brand-700 font-medium text-sm transition flex items-center justify-center gap-2">
+                            <span>ดูเมนู</span>
+                            <i class="fa-solid fa-angle-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Card 2: ต้มยำกุ้งน้ำข้น -->
+                    <div class="bg-white rounded-3xl p-4 soft-shadow hover-lift flex flex-col justify-between border border-amber-900/5">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden h-48 mb-4">
+                                <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800&auto=format&fit=crop" 
+                                     alt="ต้มยำกุ้งน้ำข้น" 
+                                     class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-amber-900 shadow-sm flex items-center gap-1">
+                                    <i class="fa-solid fa-star text-amber-400"></i>
+                                    <span>4.8</span>
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-bold font-kanit text-amber-950 mb-1">ต้มยำกุ้งน้ำข้น</h3>
+                            <p class="text-xs text-amber-900/70 mb-4">เข้มข้น วัตถุดิบหาง่าย รสแซ่บกลมกล่อม หอมกลิ่นข่าตะไคร้ใบมะกรูด</p>
+                        </div>
+                        <button onclick="openRecipeModal('ต้มยำกุ้งน้ำข้น', '4.8', '25 นาที', 'https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800&auto=format&fit=crop', 'กุ้งแม่น้ำ 4 ตัว, สมุนไพรต้มยำ, เห็ดฟาง, นมข้นจืด 4 ช้อนโต๊ะ, น้ำพริกเผา', '1. ต้มน้ำซุปสมุนไพรจนหอม<br>2. ใส่กุ้งและเห็ดฟางต้มพอสุก<br>3. เติมนมข้นจืด น้ำพริกเผา และมะนาวสดก่อนปิดไฟ')" 
+                                class="w-full py-2.5 rounded-xl bg-brand-50 hover:bg-brand-500 hover:text-white text-brand-700 font-medium text-sm transition flex items-center justify-center gap-2">
+                            <span>ดูเมนู</span>
+                            <i class="fa-solid fa-angle-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Card 3: ผัดพริกแกงหมูกรอบ -->
+                    <div class="bg-white rounded-3xl p-4 soft-shadow hover-lift flex flex-col justify-between border border-amber-900/5">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden h-48 mb-4">
+                                <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?q=80&w=800&auto=format&fit=crop" 
+                                     alt="ผัดพริกแกงหมูกรอบ" 
+                                     class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-amber-900 shadow-sm flex items-center gap-1">
+                                    <i class="fa-solid fa-star text-amber-400"></i>
+                                    <span>4.7</span>
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-bold font-kanit text-amber-950 mb-1">ผัดพริกแกงหมูกรอบ</h3>
+                            <p class="text-xs text-amber-900/70 mb-4">เมนูยอดนิยม กินกับข้าวอร่อย หมูกรอบกรวบกรอบ พริกแกงเผ็ดหอม</p>
+                        </div>
+                        <button onclick="openRecipeModal('ผัดพริกแกงหมูกรอบ', '4.7', '20 นาที', 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?q=80&w=800&auto=format&fit=crop', 'หมูกรอบ 200g, พริกแกงเผ็ด 2 ช้อนโต๊ะ, ถั่วฝักยาว, ใบมะกรูดซอย', '1. ผัดพริกแกงจนหอมฟุ้ง<br>2. ปรุงรสตามชอบ แล้วใส่ถั่วฝักยาวและหมูกรอบผัดเร็วๆ<br>3. โรยใบมะกรูดซอยพร้อมเสิร์ฟ')" 
+                                class="w-full py-2.5 rounded-xl bg-brand-50 hover:bg-brand-500 hover:text-white text-brand-700 font-medium text-sm transition flex items-center justify-center gap-2">
+                            <span>ดูเมนู</span>
+                            <i class="fa-solid fa-angle-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Card 4: สปาเก็ตตี้คาโบนาร่า -->
+                    <div class="bg-white rounded-3xl p-4 soft-shadow hover-lift flex flex-col justify-between border border-amber-900/5">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden h-48 mb-4">
+                                <img src="https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=800&auto=format&fit=crop" 
+                                     alt="สปาเก็ตตี้คาโบนาร่า" 
+                                     class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-amber-900 shadow-sm flex items-center gap-1">
+                                    <i class="fa-solid fa-star text-amber-400"></i>
+                                    <span>4.8</span>
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-bold font-kanit text-amber-950 mb-1">สปาเก็ตตี้คาโบนาร่า</h3>
+                            <p class="text-xs text-amber-900/70 mb-4">ครีมมี่ เด็กกินได้ ซอสไข่กับพาเมซานชีสหอมๆ พร้อมเบคอนกรอบ</p>
+                        </div>
+                        <button onclick="openRecipeModal('สปาเก็ตตี้คาโบนาร่า', '4.8', '20 นาที', 'https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=800&auto=format&fit=crop', 'เส้นสปาเก็ตตี้ 150g, เบคอน 80g, ไข่แดง 2 ฟอง, พาเมซานชีส, พริกไทยดำ', '1. ต้มเส้นสปาเก็ตตี้จนได้ระดับที่ต้องการ<br>2. เจียวเบคอนจนกรอบ<br>3. คลุกเส้นร้อนๆ กับไข่แดงและชีสจนได้ซอสครีมนุ่มเนียน')" 
+                                class="w-full py-2.5 rounded-xl bg-brand-50 hover:bg-brand-500 hover:text-white text-brand-700 font-medium text-sm transition flex items-center justify-center gap-2">
+                            <span>ดูเมนู</span>
+                            <i class="fa-solid fa-angle-right text-xs"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: เมนูที่แฟนชอบ (Featured Dish Showcase - Layout like 394.jpg French Fries) -->
+        <section id="lover-favorite" class="py-16 bg-cream-50 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="bg-gradient-to-r from-amber-100/80 via-white to-orange-50 rounded-3xl p-6 sm:p-10 border border-amber-200/60 shadow-xl relative">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        
+                        <!-- Image Showcase Side -->
+                        <div class="lg:col-span-6 relative">
+                            <div class="relative mx-auto rounded-3xl overflow-hidden shadow-2xl border-4 border-white h-72 sm:h-96 group">
+                                <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=1000&auto=format&fit=crop" 
+                                     alt="ไก่ทอดน้ำปลากับข้าวสวยร้อนๆ" 
+                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <div class="absolute top-4 left-4 bg-brand-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1">
+                                    <i class="fa-solid fa-crown text-amber-200"></i>
+                                    <span>อันดับ 1 ในใจแฟน</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Description Side -->
+                        <div class="lg:col-span-6 space-y-4">
+                            <span class="text-brand-600 font-bold text-sm tracking-widest uppercase">Lover's Favorite Dish</span>
+                            <h2 class="text-3xl sm:text-4xl font-bold font-kanit text-amber-950 leading-tight">
+                                ไก่ทอดน้ำปลากับข้าวสวยร้อนๆ
+                            </h2>
+                            <p class="text-amber-900/80 text-base leading-relaxed font-light">
+                                เมนูโปรดที่ถูกรีเควสต์ซ้ำมากที่สุด! หนังไก่กรอบนอก นุ่มใน หมักด้วยน้ำปลาแท้หอมฟุ้ง ทานคู่กับข้าวสวยหอมมะลิร้อนๆ และน้ำจิ้มแจ่วรสเด็ดสูตรพิเศษที่ทำง่ายมาก ใช้เวลาเพียง 25 นาทีเท่านั้น
+                            </p>
+                            
+                            <div class="bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-amber-200/50 space-y-2">
+                                <div class="flex items-center gap-2 text-sm text-amber-900 font-medium">
+                                    <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                                    <span>เคล็ดลับมัดใจแฟน:</span>
+                                </div>
+                                <p class="text-xs text-amber-900/70">
+                                    ทอดด้วยไฟกลางค่อนแรงเพื่อให้หนังไก่กรอบน่าทาน และทาซอสน้ำปลาเคี่ยวหวานนิดๆ ขณะไก่ยังร้อนอยู่ จะทำให้รสชาติเข้าเนื้อดีที่สุด!
+                                </p>
+                            </div>
+
+                            <button onclick="openRecipeModal('ไก่ทอดน้ำปลากับข้าวสวยร้อนๆ', '5.0', '25 นาที', 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=1000&auto=format&fit=crop', 'ปีกไก่กลาง 500g, น้ำปลาแท้ 2 ช้อนโต๊ะ, แป้งทอดกรอบ 3 ช้อนโต๊ะ, พริกไทยป่น, น้ำตาลปี๊บ 1 ช้อนชา', '1. หมักไก่ด้วยน้ำปลาและพริกไทยป่นทิ้งไว้ 15 นาที<br>2. คลุกแป้งทอดกรอบบางๆ แล้วนำลงทอดในน้ำมันร้อนจนเหลืองกรอบ<br>3. เคี่ยวน้ำปลากับน้ำตาลปี๊บเล็กน้อยในกระทะ แล้วนำไก่ทอดลงไปคลุกไวๆ')" 
+                                    class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-semibold text-sm shadow-lg shadow-brand-500/25 transition">
+                                <span>ดูสูตรไก่ทอดน้ำปลา</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Section: เมนูต้องซ้ำ (3 Cards - Center Card Larger) -->
+        <section class="py-16 bg-cream-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-brand-600 font-semibold text-sm tracking-wider uppercase mb-1 block">Repeat Favorite</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-kanit text-amber-950">🔄 เมนูต้องซ้ำ</h2>
+                    <p class="text-amber-900/70 mt-2">อร่อยจนต้องทำอีก แฟนขอเบิ้ลทุกรอบที่ทำ</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-center">
+                    
+                    <!-- Card 1 (Side Normal) -->
+                    <div class="bg-white rounded-3xl p-5 soft-shadow border border-amber-900/5 hover-lift">
+                        <div class="relative rounded-2xl overflow-hidden h-44 mb-4">
+                            <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=800&auto=format&fit=crop" 
+                                 alt="ไข่เจียวทรงเครื่องหมูสับ" class="w-full h-full object-cover">
+                            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-amber-900"><i class="fa-solid fa-star text-amber-400 mr-1"></i>4.9</span>
+                        </div>
+                        <h3 class="text-lg font-bold font-kanit text-amber-950 mb-1">ไข่เจียวทรงเครื่องหมูสับ</h3>
+                        <p class="text-xs text-amber-900/70 mb-4">ฟูนุ่มหอมกรุ่น ใส่หมูสับและหอมใหญ่เต็มคำ ทำง่ายประหยัดเวลา</p>
+                        <button onclick="openRecipeModal('ไข่เจียวทรงเครื่องหมูสับ', '4.9', '10 นาที', 'https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=800&auto=format&fit=crop', 'ไข่ไก่ 3 ฟอง, หมูสับ 50g, หอมใหญ่ซอย, พริกชี้ฟ้า, ซีอิ๊วขาว', '1. ตีไข่ใส่หมูสับและเครื่องปรุง<br>2. เจียวในน้ำมันร้อนจนฟูกรอบสีเหลืองทอง')" class="w-full py-2.5 rounded-xl bg-brand-50 hover:bg-brand-500 hover:text-white text-brand-700 font-medium text-sm transition">ดูเมนู</button>
+                    </div>
+
+                    <!-- Card 2 (CENTER LARGEST FEATURED) -->
+                    <div class="bg-white rounded-3xl p-6 shadow-2xl border-2 border-brand-400 relative z-10 md:-mt-4 md:-mb-4 hover-lift">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-600 to-brand-400 text-white text-xs font-bold px-4 py-1 rounded-full shadow-md uppercase tracking-wider">
+                            ⭐ เมนูยอดฮิตทำซ้ำสูงสุด
+                        </div>
+                        <div class="relative rounded-2xl overflow-hidden h-56 mb-5 mt-2">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop" 
+                                 alt="หมูกรอบผัดพริกสด" class="w-full h-full object-cover">
+                            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-amber-900 shadow-sm"><i class="fa-solid fa-star text-amber-400 mr-1"></i>5.0</span>
+                        </div>
+                        <h3 class="text-xl font-bold font-kanit text-amber-950 mb-1">หมูกรอบผัดพริกสด</h3>
+                        <p class="text-sm text-amber-900/70 mb-5">หมูกรอบหนังกร๊อบกรอบ ผัดพริกสดขี้หนูสวนหอมเตะจมูก กินกับข้าวสวยร้อนๆ ฟินที่สุด</p>
+                        <button onclick="openRecipeModal('หมูกรอบผัดพริกสด', '5.0', '15 นาที', 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop', 'หมูกรอบ 250g, พริกจินดาแดง/เขียว 10 เม็ด, กระเทียม 5 กลีบ, ต้นหอม', '1. โขลกพริกกระเทียมผัดจนหอม<br>2. ใส่หมูกรอบลงผัด ปรุงรสซอสหอยนางรมและน้ำปลาเร็วๆ ให้หนังยังกรอบ')" class="w-full py-3 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-semibold text-sm shadow-md transition">ดูเมนูยอดฮิตนี้</button>
+                    </div>
+
+                    <!-- Card 3 (Side Normal) -->
+                    <div class="bg-white rounded-3xl p-5 soft-shadow border border-amber-900/5 hover-lift">
+                        <div class="relative rounded-2xl overflow-hidden h-44 mb-4">
+                            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=800&auto=format&fit=crop" 
+                                 alt="ต้มจืดเต้าหู้หมูสับไข่น้ำ" class="w-full h-full object-cover">
+                            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-amber-900"><i class="fa-solid fa-star text-amber-400 mr-1"></i>4.8</span>
+                        </div>
+                        <h3 class="text-lg font-bold font-kanit text-amber-950 mb-1">ต้มจืดเต้าหู้หมูสับไข่น้ำ</h3>
+                        <p class="text-xs text-amber-900/70 mb-4">ซุปร้อนๆ คล่องคอ รสชาติหวานซุปกระดูกหมู เหมาะสำหรับมื้อเย็นอบอุ่น</p>
+                        <button onclick="openRecipeModal('ต้มจืดเต้าหู้หมูสับไข่น้ำ', '4.8', '20 นาที', 'https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=800&auto=format&fit=crop', 'เต้าหู้ไข่ 1 หลอด, หมูสับ 100g, ไข่ไก่ 2 ฟอง, ผักกาดขาว, สาหร่าย', '1. ทอดไข่เจียวตัดเป็นชิ้น<br>2. ต้มน้ำซุปใส่หมูสับ ผักกาดขาว เต้าหู้ และไข่เจียวลงต้ม')" class="w-full py-2.5 rounded-xl bg-brand-50 hover:bg-brand-500 hover:text-white text-brand-700 font-medium text-sm transition">ดูเมนู</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: เมนูประหยัด (3 Cards - Center Card Larger) -->
+        <section id="budget-menu" class="py-16 bg-cream-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-emerald-600 font-semibold text-sm tracking-wider uppercase mb-1 block">Budget Friendly</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-kanit text-amber-950">💰 เมนูประหยัด</h2>
+                    <p class="text-amber-900/70 mt-2">ใช้งบน้อย วัตถุดิบหาง่าย สบายกระเป๋าอร่อยคุ้มค่า</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-center">
+                    
+                    <!-- Card 1 (Side Normal) -->
+                    <div class="bg-white rounded-3xl p-5 soft-shadow border border-amber-900/5 hover-lift">
+                        <div class="relative rounded-2xl overflow-hidden h-44 mb-4">
+                            <img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?q=80&w=800&auto=format&fit=crop" 
+                                 alt="ผัดมาม่าขี้เมาทรงเครื่อง" class="w-full h-full object-cover">
+                            <span class="absolute top-3 left-3 bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg">งบ 40 บาท</span>
+                        </div>
+                        <h3 class="text-lg font-bold font-kanit text-amber-950 mb-1">ผัดมาม่าขี้เมาทรงเครื่อง</h3>
+                        <p class="text-xs text-amber-900/70 mb-4">เปลี่ยนบะหมี่สำเร็จรูปเดิมๆ เป็นเมนูสุดแซ่บจัดจ้าน หอมกลิ่นกระเพราขี้เมา</p>
+                        <button onclick="openRecipeModal('ผัดมาม่าขี้เมาทรงเครื่อง', '4.8', '12 นาที', 'https://images.unsplash.com/photo-1617093727343-374698b1b08d?q=80&w=800&auto=format&fit=crop', 'มาม่า 1 ซอง, หมูสับ/ไส้กรอก, ใบกะเพรา, พริกขี้หนู, พริกไทยอ่อน', '1. ลวกเส้นมาม่าพอหร่าๆ<br>2. ผัดพริกกระเทียมกับหมูสับและเส้น ปรุงรสเครื่องปรุงมาม่าผสมซอสหอยนางรม')" class="w-full py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 font-medium text-sm transition">ดูเมนู</button>
+                    </div>
+
+                    <!-- Card 2 (CENTER LARGEST FEATURED) -->
+                    <div class="bg-white rounded-3xl p-6 shadow-2xl border-2 border-emerald-400 relative z-10 md:-mt-4 md:-mb-4 hover-lift">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-md uppercase tracking-wider">
+                            💡 อร่อยคุ้มค่ากินได้ทั้งวัน
+                        </div>
+                        <div class="relative rounded-2xl overflow-hidden h-56 mb-5 mt-2">
+                            <img src="https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?q=80&w=800&auto=format&fit=crop" 
+                                 alt="ข้าวมันไก่ต้มโฮมเมด" class="w-full h-full object-cover">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-lg shadow-sm">งบ 80 บาท</span>
+                        </div>
+                        <h3 class="text-xl font-bold font-kanit text-amber-950 mb-1">ข้าวมันไก่ต้มโฮมเมด</h3>
+                        <p class="text-sm text-amber-900/70 mb-5">ข้าวมันหอมนุ่ม น่องไก่ชิ้นโตเนื้อฉ่ำ พร้อมน้ำจิ้มเต้าเจี้ยวสูตรเด็ด ทำทานได้ 2-3 มื้อประหยัดสุดๆ</p>
+                        <button onclick="openRecipeModal('ข้าวมันไก่ต้มโฮมเมด', '4.9', '30 นาที', 'https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?q=80&w=800&auto=format&fit=crop', 'น่องไก่ติดสะโพก 2 ชิ้น, ข้าวสาร 2 ถ้วย, ขิง กระเทียม, เต้าเจี้ยว มะนาว พริก', '1. ต้มไก่ใส่ขิงกระเทียมเอาน้ำซุป<br>2. หุงข้าวด้วยน้ำมันเจียวกระเทียมและน้ำซุปไก่<br>3. ผสมเต้าเจี้ยว ซีอิ๊วดำ มะนาว พริกขิงซอยเป็นน้ำจิ้ม')" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md transition">ดูเมนูประหยัดนี้</button>
+                    </div>
+
+                    <!-- Card 3 (Side Normal) -->
+                    <div class="bg-white rounded-3xl p-5 soft-shadow border border-amber-900/5 hover-lift">
+                        <div class="relative rounded-2xl overflow-hidden h-44 mb-4">
+                            <img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?q=80&w=800&auto=format&fit=crop" 
+                                 alt="กะเพราไข่เยี่ยวม้าหมูสับ" class="w-full h-full object-cover">
+                            <span class="absolute top-3 left-3 bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg">งบ 50 บาท</span>
+                        </div>
+                        <h3 class="text-lg font-bold font-kanit text-amber-950 mb-1">กะเพราไข่เยี่ยวม้าหมูสับ</h3>
+                        <p class="text-xs text-amber-900/70 mb-4">ไข่เยี่ยวม้าทอดกรอบๆ ผัดซอสกะเพราหมูสับเข้มข้น รสชาติเข้ากันดีเยี่ยม</p>
+                        <button onclick="openRecipeModal('กะเพราไข่เยี่ยวม้าหมูสับ', '4.7', '15 นาที', 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?q=80&w=800&auto=format&fit=crop', 'ไข่เยี่ยวม้า 2 ฟอง, หมูสับ 80g, ใบกะเพรากรอบ, พริกกระเทียมโขลก', '1. ทอดไข่เยี่ยวม้าพอผิวตึงพักไว้<br>2. ผัดหมูสับกับพริกกระเทียม ปรุงรสแลัวนำมาราดบนไข่เยี่ยวม้าทอด')" class="w-full py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 font-medium text-sm transition">ดูเมนู</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: เมนูทำไว (4 Cards Grid / Fast 20 Mins) -->
+        <section class="py-16 bg-cream-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-brand-600 font-semibold text-sm tracking-wider uppercase mb-1 block">Fast & Easy</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-kanit text-amber-950">🔥 เมนูทำไว</h2>
+                    <p class="text-amber-900/70 mt-2">เสร็จภายใน 20 นาที เหมาะกับวันทำงานเหนื่อยๆ ได้กินทันใจ</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Fast 1: ไข่เจียวพระอาทิตย์ -->
+                    <div class="bg-white rounded-3xl p-4 soft-shadow hover-lift flex flex-col justify-between border border-amber-900/5">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden h-44 mb-4">
+                                <img src="https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?q=80&w=800&auto=format&fit=crop" 
+                                     alt="ไข่เจียวพระอาทิตย์" class="w-full h-full object-cover">
+                                <span class="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-md"><i class="fa-regular fa-clock mr-1"></i>10 นาที</span>
+                            </div>
+                            <h3 class="text-lg font-bold font-kanit text-amber-950 mb-1">ไข่เจียวพระอาทิตย์</h3>
+                            <p class="text-xs text-amber-900/70 mb-4">สูตรพระราชทาน นำข้าวสวยผสมในไข่เจียว ทอดจนกรอบนอกนุ่มใน อิ่มท้องไวมาก</p>
+                        </div>
+                        <button onclick="openRecipeModal('ไข่เจียวพระอาทิตย์', '4.8', '10 นาที', 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?q=80&w=800&auto=format&fit=crop', 'ไข่ไก่ 2 ฟอง, ข้าวสวย 1 ทัพพี, น้ำปลา 1 ช้อนชา', '1. ตีไข่ใส่ข้าวสวยและน้ำปลาให้เข้ากัน<br>2. เทลงทอดในกระทะน้ำมันร้อนจนเหลืองกรอบทั้งสองด้าน')" class="w-full py-2.5 rounded-xl bg-brand-50 hover:bg-brand-500 hover:text-white text-brand-700 font-medium text-sm transition">ดูเมนู</button>
+                    </div>
+
+                    <!-- Fast 2: สุกี้แห้งทะเล -->
+                    <div class="bg-white rounded-3xl p-4 soft-shadow hover-lift flex flex-col justify-between border border-amber-900/5">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden h-44 mb-4">
+                                <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=800&auto=format&fit=crop" 
+                                     alt="สุกี้แห้งทะเล" class="w-full h-full object-cover">
+                                <span class="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-md"><i class="fa-regular fa-clock mr-1"></i>15 นาที</span>
+                            </div>
+                            <h3 class="text-lg font-bold font-kanit text-amber-950 mb-1">สุกี้แห้งทะเล</h3>
+                            <p class="text-xs text-amber-900/70 mb-4">ผัดวุ้นเส้นกับผักสด กุ้ง หมึก และน้ำจิ้มสุกี้รสเด็ด หอมกลิ่นกระทะคั่ว</p>
+                        </div>
+                        <button onclick="openRecipeModal('สุกี้แห้งทะเล', '4.9', '15 นาที', 'https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=800&auto=format&fit=crop', 'วุ้นเส้น 1 ซอง, กุ้ง หมึก, ผักบุ้ง ผักกาดขาว, น้ำจิ้มสุกี้ 3 ช้อนโต๊ะ, ไข่ไก่', '1. ผัดเนื้อสัตว์และไข่ไก่พอสุก<br>2. ใส่ผัก วุ้นเส้น และน้ำจิ้มสุกี้ผัดให้เข้ากันด้วยไฟแรง')" class="w-full py-2.5 rounded-xl bg-brand-50 hover:bg-brand-500 hover:text-white text-brand-700 font-medium text-sm transition">ดูเมนู</button>
+                    </div>
+
+                    <!-- Fast 3: ผัดซีอิ๊วหมู -->
+                    <div class="bg-white rounded-3xl p-4 soft-shadow hover-lift flex flex-col justify-between border border-amber-900/5">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden h-44 mb-4">
+                                <img src="https://images.unsplash.com/photo-1626804475297-41608ea09aeb?q=80&w=800&auto=format&fit=crop" 
+                                     alt="ผัดซีอิ๊วหมู" class="w-full h-full object-cover">
+                                <span class="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-md"><i class="fa-regular fa-clock mr-1"></i>15 นาที</span>
+                            </div>
+                            <h3 class="text-lg font-bold font-kanit text-amber-950 mb-1">ผัดซีอิ๊วหมู</h3>
+                            <p class="text-xs text-amber-900/70 mb-4">เส้นใหญ่ผัดซีอิ๊วดำหอมหวน หมูนุ่ม และคะน้ากรอบๆ ทำง่ายอร่อยทันใจ</p>
+                        </div>
+                        <button onclick="openRecipeModal('ผัดซีอิ๊วหมู', '4.8', '15 นาที', 'https://images.unsplash.com/photo-1626804475297-41608ea09aeb?q=80&w=800&auto=format&fit=crop', 'เส้นใหญ่ 200g, หมูนุ่ม 100g, ผักคะน้า, ไข่ไก่, ซีอิ๊วดำ ซีอิ๊วขาว', '1. ยีเส้นใหญ่คลุกซีอิ๊วดำ<br>2. ผัดหมูและไข่พอสุก ใส่เส้นใหญ่และคะน้าผัดไฟแรงเร็วกระทะ')" class="w-full py-2.5 rounded-xl bg-brand-50 hover:bg-brand-500 hover:text-white text-brand-700 font-medium text-sm transition">ดูเมนู</button>
+                    </div>
+
+                    <!-- Fast 4: ผัดฉ่าปลาทอด -->
+                    <div class="bg-white rounded-3xl p-4 soft-shadow hover-lift flex flex-col justify-between border border-amber-900/5">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden h-44 mb-4">
+                                <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=800&auto=format&fit=crop" 
+                                     alt="ผัดฉ่าปลาทอด" class="w-full h-full object-cover">
+                                <span class="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-md"><i class="fa-regular fa-clock mr-1"></i>20 นาที</span>
+                            </div>
+                            <h3 class="text-lg font-bold font-kanit text-amber-950 mb-1">ผัดฉ่าปลาทอด</h3>
+                            <p class="text-xs text-amber-900/70 mb-4">เนื้อปลาทอดกรอบผัดสมุนไพรสด ทั้งกระชาย พริกไทยอ่อน และใบกะเพราแซ่บสะใจ</p>
+                        </div>
+                        <button onclick="openRecipeModal('ผัดฉ่าปลาทอด', '4.7', '20 นาที', 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=800&auto=format&fit=crop', 'เนื้อปลาดอลลี่/ปลากะพงทอด 200g, กระชายซอย, พริกไทยอ่อน, ใบกะเพรา', '1. ทอดปลาพักไว้<br>2. ผัดเครื่องพริกกระเทียม กระชาย และพริกไทยอ่อน ปรุงรสแล้วนำปลาทอดลงคลุก')" class="w-full py-2.5 rounded-xl bg-brand-50 hover:bg-brand-500 hover:text-white text-brand-700 font-medium text-sm transition">ดูเมนู</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section ล่าง (CTA) -->
+        <section id="about" class="py-20 bg-gradient-to-b from-cream-50 to-cream-200 relative overflow-hidden">
+            <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+                <div class="w-16 h-16 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mx-auto mb-6 shadow-md">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                
+                <h2 class="text-3xl sm:text-5xl font-bold font-kanit text-amber-950 mb-6 leading-tight">
+                    "ความรัก เริ่มต้นจากอาหารที่ตั้งใจทำ"
+                </h2>
+                
+                <p class="text-amber-900/70 text-lg mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+                    เพราะการทำอาหารให้คนที่เรารักทาน คือช่วงเวลาแห่งความสุขสั้นๆ ในทุกๆ วัน ให้เราช่วยเติมไอเดียเมนูอร่อยในครัวของคุณนะครับ
+                </p>
+
+                <a href="#featured" class="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-lg shadow-xl shadow-brand-500/30 hover:scale-105 transition">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>เริ่มทำอาหาร</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-amber-950 text-amber-100/80 py-12 border-t border-amber-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+                
+                <!-- Brand Info -->
+                <div>
+                    <div class="flex items-center justify-center md:justify-start gap-3 mb-2">
+                        <div class="w-8 h-8 rounded-xl bg-brand-500 text-white flex items-center justify-center text-sm">
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <span class="text-xl font-bold font-kanit text-white">ทำอาหารให้แฟนกิน</span>
+                    </div>
+                    <p class="text-xs text-amber-200/60">ติดตามเมนูใหม่ทุกสัปดาห์ เติมหวานให้อบอุ่นทุกมื้อ</p>
+                </div>
+
+                <!-- Social Links -->
+                <div class="flex flex-col items-center md:items-end gap-3">
+                    <span class="text-xs text-amber-200/70">ติดตามเมนูใหม่ทุกสัปดาห์ ได้ที่:</span>
+                    <div class="flex items-center gap-3">
+                        <!-- Facebook Direct Link to requested page -->
+                        <a href="https://www.facebook.com/share/1HTVZ2qxKP/" target="_blank" rel="noopener noreferrer" 
+                           class="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center gap-2 transition shadow-md">
+                            <i class="fa-brands fa-facebook-f text-sm"></i>
+                            <span>ทำอาหารให้แฟนกิน</span>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-amber-900/80 hover:bg-brand-500 hover:text-white text-amber-200 flex items-center justify-center transition">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-amber-900/80 hover:bg-brand-500 hover:text-white text-amber-200 flex items-center justify-center transition">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-amber-900/80 hover:bg-brand-500 hover:text-white text-amber-200 flex items-center justify-center transition">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-amber-900/60 text-center text-xs text-amber-200/40 flex flex-col sm:flex-row justify-between items-center gap-2">
+                <p>© 2026 ทำอาหารให้แฟนกิน. สงวนลิขสิทธิ์ทุกประการ.</p>
+                <p>Designed for Home Cooking Lovers</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Recipe Detail Modal Popup -->
+    <div id="recipe-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl transform transition-all relative max-h-[90vh] flex flex-col">
+            <div class="relative h-56 shrink-0">
+                <img id="modal-img" src="" alt="Recipe Image" class="w-full h-full object-cover">
+                <button onclick="closeRecipeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-amber-900 flex items-center gap-1">
+                    <i class="fa-solid fa-star text-amber-400"></i>
+                    <span id="modal-rating">4.9</span>
+                </div>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-4 text-left">
+                <div class="flex items-center justify-between">
+                    <h3 id="modal-title" class="text-2xl font-bold font-kanit text-amber-950">ชื่อเมนู</h3>
+                    <span id="modal-time" class="text-xs bg-brand-100 text-brand-800 px-3 py-1 rounded-full font-medium"><i class="fa-regular fa-clock mr-1"></i>15 นาที</span>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-amber-900 mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-basket-shopping text-brand-500"></i> วัตถุดิบ
+                    </h4>
+                    <p id="modal-ingredients" class="text-sm text-amber-900/80 bg-amber-50 p-3 rounded-xl border border-amber-100 leading-relaxed"></p>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-amber-900 mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-kitchen-set text-brand-500"></i> ขั้นตอนการทำ
+                    </h4>
+                    <p id="modal-steps" class="text-sm text-amber-900/80 leading-relaxed bg-cream-50 p-3 rounded-xl border border-cream-200"></p>
+                </div>
+            </div>
+
+            <div class="p-4 bg-amber-50 border-t border-amber-100 shrink-0 flex justify-end">
+                <button onclick="closeRecipeModal()" class="px-6 py-2.5 rounded-xl bg-brand-500 text-white font-semibold text-sm hover:bg-brand-600 transition">
+                    เข้าใจแล้ว เริ่มทำเลย!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Random Dish Picker Modal ("วันนี้กินอะไรดี") -->
+    <div id="random-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl relative">
+            <button onclick="closeRandomModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="w-16 h-16 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                <i class="fa-solid fa-dice animate-spin-slow"></i>
+            </div>
+
+            <h3 class="text-xl font-bold font-kanit text-amber-950 mb-1">วันนี้จะทำอะไรให้แฟนกินดี?</h3>
+            <p class="text-xs text-amber-900/60 mb-6">สุ่มเมนูเด็ดมัดใจแฟนทันที</p>
+
+            <div id="random-result" class="bg-cream-100 p-4 rounded-2xl border border-amber-200 mb-6 min-h-[90px] flex flex-col items-center justify-center">
+                <span class="text-amber-900/50 text-sm">กดปุ่มสุ่มด้านล่างได้เลย!</span>
+            </div>
+
+            <button onclick="spinRandomDish()" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl shadow-lg shadow-brand-500/30 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-shuffle"></i>
+                <span>สุ่มเมนูอาหาร</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Drawer
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Recipe Modal Controls
+        function openRecipeModal(title, rating, time, img, ingredients, steps) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-rating').innerText = rating;
+            document.getElementById('modal-time').innerHTML = `<i class="fa-regular fa-clock mr-1"></i>${time}`;
+            document.getElementById('modal-img').src = img;
+            document.getElementById('modal-ingredients').innerText = ingredients;
+            document.getElementById('modal-steps').innerHTML = steps;
+
+            document.getElementById('recipe-modal').classList.remove('hidden');
+        }
+
+        function closeRecipeModal() {
+            document.getElementById('recipe-modal').classList.add('hidden');
+        }
+
+        // Random Dish Controls
+        const dishList = [
+            { name: "กะเพราหมูสับ", desc: "เมนูยอดฮิต ทำง่ายใน 10 นาที" },
+            { name: "กะเพราไก่กรอบ", desc: "กรอบนอก หอมใบกะเพรา" },
+            { name: "กะเพราเนื้อ", desc: "เนื้อนุ่ม รสจัดจ้าน" },
+            { name: "ข้าวผัดหมู", desc: "หอมกระทะ กินได้ทุกวัย" },
+            { name: "ข้าวผัดกุ้ง", desc: "กุ้งเด้ง ข้าวร่วนหอม" },
+            { name: "ข้าวผัดปู", desc: "เนื้อปูแน่น หอมไข่" },
+            { name: "ผัดซีอิ๊วหมู", desc: "เส้นเหนียวนุ่ม หอมซีอิ๊ว" },
+            { name: "ราดหน้าหมู", desc: "น้ำราดเข้มข้น" },
+            { name: "คะน้าหมูกรอบ", desc: "หมูกรอบกับคะน้ากรอบ" },
+            { name: "หมูทอดกระเทียม", desc: "หอมกระเทียมเจียว" },
+            { name: "ไก่ทอดน้ำปลา", desc: "หนังกรอบ เนื้อนุ่ม" },
+            { name: "ลาบหมู", desc: "แซ่บนัว กินกับผักสด" },
+            { name: "น้ำตกคอหมูย่าง", desc: "เผ็ดหอมข้าวคั่ว" },
+            { name: "ต้มจืดเต้าหู้หมูสับ", desc: "ซดร้อนๆ คล่องคอ" },
+            { name: "แกงจืดสาหร่าย", desc: "เบาๆ สุขภาพดี" },
+            { name: "ต้มยำทะเล", desc: "เปรี้ยวเผ็ดจัดจ้าน" },
+            { name: "แกงเขียวหวานไก่", desc: "หอมกะทิ" },
+            { name: "พะแนงหมู", desc: "เข้มข้น หอมเครื่องแกง" },
+            { name: "มัสมั่นไก่", desc: "หวานมัน กลมกล่อม" },
+            { name: "ไข่ลูกเขย", desc: "หวานเปรี้ยวกำลังดี" },
+            { name: "ไข่พะโล้", desc: "น้ำพะโล้หอมเครื่องเทศ" },
+            { name: "ข้าวมันไก่", desc: "น้ำจิ้มเต้าเจี้ยวสูตรเด็ด" },
+            { name: "โจ๊กหมู", desc: "อุ่นท้องยามเช้า" },
+            { name: "ข้าวต้มปลา", desc: "เบาๆ สุขภาพดี" },
+            { name: "สปาเก็ตตี้ขี้เมาทะเล", desc: "เผ็ดหอมสมุนไพร" },
+            { name: "สปาเก็ตตี้ซอสมะเขือเทศ", desc: "เด็กๆ ชอบ" },
+            { name: "สเต๊กหมูพริกไทยดำ", desc: "ซอสเข้มข้น" },
+            { name: "ข้าวไข่ข้นกุ้ง", desc: "ไข่นุ่มละมุน" },
+            { name: "ข้าวไข่ข้นแฮม", desc: "ง่ายและอร่อย" },
+            { name: "ข้าวคลุกกะปิ", desc: "เครื่องแน่นครบรส" },
+            { name: "ข้าวหน้าไก่", desc: "น้ำราดหอมพริกไทย" },
+            { name: "ผัดมาม่าขี้เมา", desc: "แซ่บถึงใจ" },
+            { name: "มาม่าต้มยำทะเล", desc: "ทำง่าย อร่อยไว" },
+            { name: "ยำวุ้นเส้น", desc: "เปรี้ยวเผ็ดสดชื่น" },
+            { name: "ยำไข่ดาว", desc: "กรอบนอก แซ่บใน" },
+            { name: "ยำหมูยอ", desc: "เครื่องแน่น" },
+            { name: "ไก่อบซอสเทอริยากิ", desc: "สไตล์ญี่ปุ่น" },
+            { name: "ข้าวแกงกะหรี่ไก่", desc: "หอมเครื่องเทศ" },
+            { name: "ข้าวหน้าเนื้อญี่ปุ่น", desc: "หวานเค็มกำลังดี" },
+            { name: "หมูผัดกิมจิ", desc: "เกาหลีสุดๆ" },
+            { name: "บิบิมบับ", desc: "ข้าวยำเกาหลี" },
+            { name: "ข้าวหน้าแซลมอน", desc: "สายสุขภาพ" },
+            { name: "ข้าวหน้าไก่ย่าง", desc: "หอมเตาถ่าน" },
+            { name: "ปลานึ่งมะนาว", desc: "เปรี้ยวแซ่บ" },
+            { name: "ปลาทอดน้ำปลา", desc: "กรอบนอกนุ่มใน" },
+            { name: "กุ้งอบวุ้นเส้น", desc: "หอมพริกไทย" },
+            { name: "ผัดผักรวม", desc: "อิ่มอร่อยสุขภาพดี" },
+            { name: "บรอกโคลีผัดกุ้ง", desc: "สีสันน่ากิน" },
+            { name: "เต้าหู้ทรงเครื่อง", desc: "โปรตีนสูง" },
+            { name: "เห็ดผัดน้ำมันหอย", desc: "หอมอร่อย" }
+        ];
+
+        function openRandomModal() {
+            document.getElementById('random-modal').classList.remove('hidden');
+        }
+
+        function closeRandomModal() {
+            document.getElementById('random-modal').classList.add('hidden');
+        }
+
+        function spinRandomDish() {
+            const resultDiv = document.getElementById('random-result');
+            resultDiv.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-2xl text-brand-500"></i>`;
+            
+            setTimeout(() => {
+                const randomItem = dishList[Math.floor(Math.random() * dishList.length)];
+                resultDiv.innerHTML = `
+                    <span class="text-xs text-brand-600 font-bold uppercase tracking-wider mb-1">เมนูที่สุ่มได้</span>
+                    <h4 class="text-lg font-bold font-kanit text-amber-950">${randomItem.name}</h4>
+                    <span class="text-xs text-amber-900/70 mt-1">${randomItem.desc}</span>
+                `;
+            }, 500);
+        }
+    </script>
+</body>
+</html>
